@@ -1,0 +1,92 @@
+# Docker Compose provides internal DNS.
+
+services:
+
+  # ==========================================
+  # PostgreSQL Database
+  # ==========================================
+  database:
+    image: postgres:17-alpine
+
+    container_name: three-tier-db
+
+    environment:
+      POSTGRES_DB: appdb
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: apppassword
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U appuser -d appdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+    networks:
+      - three-tier-network
+
+
+  # ==========================================
+  # Backend API
+  # ==========================================
+  backend:
+    build:
+      context: ./app/backend
+      dockerfile: Dockerfile
+
+    container_name: three-tier-backend
+
+    environment:
+      DB_HOST: database
+      DB_PORT: 5432
+      DB_NAME: appdb
+      DB_USER: appuser
+      DB_PASSWORD: apppassword
+
+    depends_on:
+      database:
+        condition: service_healthy
+
+    expose:
+      - "8000"
+
+    networks:
+      - three-tier-network
+
+
+  # ==========================================
+  # Frontend
+  # ==========================================
+  frontend:
+    build:
+      context: ./app/frontend
+      dockerfile: Dockerfile
+
+    container_name: three-tier-frontend
+
+    ports:
+      - "8080:80"
+
+    depends_on:
+      backend:
+        condition: service_healthy
+
+    networks:
+      - three-tier-network
+
+
+# ==========================================
+# Persistent PostgreSQL storage
+# ==========================================
+volumes:
+  postgres_data:
+
+
+# ==========================================
+# Internal application network
+# ==========================================
+networks:
+  three-tier-network:
+    driver: bridge
