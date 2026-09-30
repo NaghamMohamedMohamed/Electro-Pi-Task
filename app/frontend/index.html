@@ -1,0 +1,124 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  >
+
+  <title>Three-Tier Demo</title>
+
+</head>
+
+<body>
+
+  <h1>Three-Tier Demo</h1>
+
+  <p id="status">
+    Loading...
+  </p>
+
+  <form id="form">
+
+    <input
+      id="name"
+      placeholder="Item name"
+      required
+    >
+
+    <button>
+      Add
+    </button>
+
+  </form>
+
+  <ul id="items"></ul>
+
+
+<script>
+
+async function loadItems() {
+
+  const response =
+    // The browser talks to the ALB. The ALB decides where /api/* goes.
+    await fetch('/api/items');
+
+  if (!response.ok) {
+    throw new Error(
+      'API unavailable'
+    );
+  }
+
+  const items =
+    await response.json();
+
+  document
+    .getElementById('items')
+    .innerHTML =
+      items
+        .map(
+          x => `<li>${x.id}: ${x.name}</li>`
+        )
+        .join('');
+
+  document
+    .getElementById('status')
+    .textContent =
+      'Backend API is connected.';
+}
+
+
+document
+  .getElementById('form')
+  .addEventListener(
+    'submit',
+    async event => {
+
+      event.preventDefault();
+
+      const name =
+        document
+          .getElementById('name')
+          .value;
+
+      await fetch(
+        '/api/items',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type':
+              'application/json'
+          },
+          body: JSON.stringify({
+            name
+          })
+        }
+      );
+
+      event.target.reset();
+
+      await loadItems();
+    }
+  );
+
+
+loadItems()
+  .catch(error => {
+
+    document
+      .getElementById('status')
+      .textContent =
+        error.message;
+
+  });
+
+</script>
+
+</body>
+
+</html>
