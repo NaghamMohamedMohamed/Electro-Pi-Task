@@ -1,4 +1,4 @@
-# Dpendencies needed for development and testing
+# Dependencies needed for development and testing
 
 pytest==8.4.2
 httpx==0.28.1
