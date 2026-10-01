@@ -19,8 +19,8 @@ module "security" {
   name              = local.name
   vpc_id            = module.network.vpc_id
   alb_ingress_cidrs = var.alb_ingress_cidrs
-  frontend_port     = var.frontend_port
-  backend_port      = var.backend_port
+  frontend_port     = var.frontend_container_port
+  backend_port      = var.backend_container_port
   db_port           = var.db_port
   tags              = local.common_tags
 }
