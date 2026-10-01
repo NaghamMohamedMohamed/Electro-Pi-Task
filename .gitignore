@@ -1,3 +1,29 @@
+# Terraform Files
+.terraform/
+
+*.tfstate
+.tfstate.
+
+crash.log
+crash.*.log
+
+*.tfplan
+*.plan
+
+*.tfvars
+*.tfvars.json
+
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+.terraformrc
+terraform.rc
+
+*.auto.tfvars
+*.auto.tfvars.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
