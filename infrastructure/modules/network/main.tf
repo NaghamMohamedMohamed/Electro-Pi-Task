@@ -100,7 +100,7 @@ resource "aws_nat_gateway" "nat" {
 # Public subnets -> Internet Gateway
 # ------------------
 
-resource "aws_route_table" "public" {
+resource "aws_route_table" "public_rt" {
   vpc_id = aws_vpc.myvpc.id
 
   route {
@@ -118,11 +118,11 @@ resource "aws_route_table" "public" {
 # Public Route Table Associations
 # ------------------
 
-resource "aws_route_table_association" "public" {
+resource "aws_route_table_association" "public_rta" {
   count = length(var.public_subnet_cidrs)
 
   subnet_id      = aws_subnet.public[count.index].id
-  route_table_id = aws_route_table.public.id
+  route_table_id = aws_route_table.public_rt.id
 }
 
 
@@ -131,7 +131,7 @@ resource "aws_route_table_association" "public" {
 # Private application subnets -> NAT Gateway
 # ------------------
 
-resource "aws_route_table" "private" {
+resource "aws_route_table" "private_rt" {
   vpc_id = aws_vpc.myvpc.id
 
   route {
@@ -149,11 +149,11 @@ resource "aws_route_table" "private" {
 # Private Route Table Associations
 # ------------------
 
-resource "aws_route_table_association" "private" {
+resource "aws_route_table_association" "private_rta" {
   count = length(var.private_subnet_cidrs)
 
   subnet_id      = aws_subnet.private[count.index].id
-  route_table_id = aws_route_table.private.id
+  route_table_id = aws_route_table.private_rt.id
 }
 
 
@@ -163,7 +163,7 @@ resource "aws_route_table_association" "private" {
 # They only need local VPC connectivity.
 # ------------------
 
-resource "aws_route_table" "database" {
+resource "aws_route_table" "database_rt" {
   vpc_id = aws_vpc.myvpc.id
 
   tags = merge(var.tags, {
@@ -176,9 +176,9 @@ resource "aws_route_table" "database" {
 # Database Route Table Associations
 # ------------------
 
-resource "aws_route_table_association" "database" {
+resource "aws_route_table_association" "database_rta" {
   count = length(var.db_subnet_cidrs)
 
   subnet_id      = aws_subnet.database[count.index].id
-  route_table_id = aws_route_table.database.id
+  route_table_id = aws_route_table.database_rt.id
 }
