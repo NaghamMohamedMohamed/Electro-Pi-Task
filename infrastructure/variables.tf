@@ -84,15 +84,35 @@ variable "tags" {
 # Github
 #############
 
+#############
+# GitHub
+#############
+
+variable "github_repository_owner" {
+  type    = string
+  default = "NaghamMohamedMohamed"
+}
+
+variable "github_repository_owner_id" {
+  type    = string
+  default = "107771328"
+}
+
+variable "github_repository" {
+  type    = string
+  default = "Electro-Pi-Task"
+}
+
+variable "github_repository_id" {
+  type    = string
+  default = "1398629532"
+}
+
 variable "github_branch" {
   type    = string
   default = "main"
 }
 
-variable "github_repository" {
-  type    = string
-  default = "NaghamMohamedMohamed/Electro-Pi-Task"
-}
 
 
 #############
@@ -131,12 +151,12 @@ variable "backend_memory" {
 
 variable "frontend_desired_count" {
   type    = number
-  default = 0
+  default = 1
 }
 
 variable "backend_desired_count" {
   type    = number
-  default = 0
+  default = 1
 }
 
 variable "log_retention_days" {
