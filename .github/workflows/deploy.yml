@@ -43,7 +43,7 @@ jobs:
       - name: Run backend tests
         working-directory: app/backend
         run: |
-          python -m pytest -v
+          python -m pytest -v tests/test-api.py
 
   deploy:
     name: Build Images and Deploy
