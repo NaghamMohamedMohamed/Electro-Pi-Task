@@ -20,13 +20,13 @@ output "aws_role_arn" {
 }
 
 output "ecr_frontend_repository" {
-  description = "Frontend ECR repository URL"
-  value       = aws_ecr_repository.frontend.repository_url
+  description = "Frontend ECR repository name"
+  value       = aws_ecr_repository.frontend.name
 }
 
-output "ecr_backtend_repository" {
-  description = "Backend ECR repository URL"
-  value       = aws_ecr_repository.backend.repository_url
+output "ecr_backend_repository" {
+  description = "Backend ECR repository name"
+  value       = aws_ecr_repository.backend.name
 }
 
 output "ecs_cluster" {
