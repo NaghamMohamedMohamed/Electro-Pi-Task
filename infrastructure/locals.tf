@@ -12,6 +12,8 @@ locals {
   frontend_repository_name = "${local.name}-frontend"
   backend_repository_name  = "${local.name}-backend"
 
-  frontend_image = "${aws_ecr_repository.frontend.repository_url}:${var.frontend_image_version}"
-  backend_image  = "${aws_ecr_repository.backend.repository_url}:${var.backend_image_version}"
+  #  Won't be needed as GitHubActions will mange images tagging during CI/CD )
+  
+  # frontend_image = "${aws_ecr_repository.frontend.repository_url}:${var.frontend_image_version}"
+  # backend_image  = "${aws_ecr_repository.backend.repository_url}:${var.backend_image_version}"
 }
