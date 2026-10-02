@@ -315,8 +315,8 @@ resource "aws_iam_role_policy" "github_actions_deploy" {
         ]
 
         Resource = [
-          aws_ecs_service.frontend.id,
-          aws_ecs_service.backend.id
+          aws_ecs_service.frontend.arn,
+          aws_ecs_service.backend.arn
         ]
       },
 
