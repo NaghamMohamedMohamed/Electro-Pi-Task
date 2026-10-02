@@ -6,6 +6,9 @@ on:
   push:
     branches:
       - main
+    # Specify CI/CD triggering on only web app changes
+    paths:
+      - "app/**"
 
   workflow_dispatch:
 
