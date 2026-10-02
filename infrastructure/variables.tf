@@ -91,7 +91,7 @@ variable "github_branch" {
 
 variable "github_repository" {
   type    = string
-  default = "https://github.com/NaghamMohamedMohamed/Electro-Pi-Task"
+  default = "NaghamMohamedMohamed/Electro-Pi-Task"
 }
 
 
