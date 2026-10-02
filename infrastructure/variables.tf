@@ -86,12 +86,12 @@ variable "tags" {
 
 variable "github_branch" {
   type    = string
-  default = "main"
+  default = "<YOUR-BRANCH-NAME>"
 }
 
 variable "github_repository" {
   type    = string
-  default = "https://github.com/NaghamMohamedMohamed/Electro-Pi-Task"
+  default = "https://github.com/<YOUR-USERNAME>/Electro-Pi-Task"
 }
 
 
